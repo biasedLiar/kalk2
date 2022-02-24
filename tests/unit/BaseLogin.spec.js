@@ -57,7 +57,7 @@ describe("BaseLogin.vue", () => {
 
     expect(wrapper.find('[data-testid="username-input"]').element.value).toBe("Ole")
     
-    const input3 = wrapper.find('[data-testid="password-input"]')
+    const input3 = wrapper.find('[data-testid="password-input"]') 
     //expect(input3.text()).toBe("")
 
     const input4 = wrapper.find('[data-testid="username-input"]')
