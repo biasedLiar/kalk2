@@ -1,18 +1,36 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="app">
+    
+    <div id="nav">
+      <p v-if="user">Logged in as {{user}} </p>
+      <router-link v-else :to="{ name: 'LogIn' }">Log In</router-link>  | 
+      <router-link :to="{ name: 'Home' }">Home</router-link>  | 
+      <router-link :to="{ name: 'Feedback' }">Feedback</router-link>
+    </div>
+    <router-view />
   </div>
-  <router-view />
 </template>
+<script>
+export default {
+  computed: {
+    user(){
+      return this.$store.state.user
+    }
+  }
 
+}
+</script>
 <style>
+body{
+  
+  background-color: navy;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color:aquamarine;
 }
 
 #nav {
@@ -21,7 +39,7 @@
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
 }
 
 #nav a.router-link-exact-active {
