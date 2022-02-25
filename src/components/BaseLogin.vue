@@ -1,9 +1,8 @@
 <template>
   <div id="loginContainer">
     <div id="loginTitle">
-        <label>{{loggedInUnsuccesfully}} login!</label>
+        <label>Please login!</label>
     </div>
-    <input><input>
     <div id="username">
         <label id="usernameLabel">Username:</label>
         <textarea v-model="username" data-testid="username-input"></textarea>
@@ -13,10 +12,7 @@
         <textarea v-model="password" data-testid="password-input"></textarea>
         <button type="submit" v-on:click="handleClickSignin">Sign in</button>
       </div>
-      <div v-if="loggedInUnsuccesfully"  data-testid="register-link">
-        <router-link class="registerLink"  :to="{ name: 'Register' }">Register</router-link>
-
-      </div>
+      
   </div>
   
 </template>
@@ -24,30 +20,18 @@
 
 <script>
 export default {
-  methods: {
-    handleClickSignin (){
-      this.loggedInUnsuccesfully = true
-      /*
-      if (this.logInInfoCorrect()){
-        this.$store.dispatch('logInAs', this.username)
-      } else{
-        this.loggedInUnsuccesfully = true
-        console.log("failed")
-      }*/
-    },
-    logInInfoCorrect(){
-      if (this.username === this.$store.state.username && this.password === this.$store.state.password) {
-        return true;
-      }
-      return false;
-    }
-  },
+  
   data() {
     return {
       username: '',
       password: '',
       newField: '',
-      loggedInUnsuccesfully: false,
+    }
+  },
+  emits: ['loginSubmitted'],
+  methods: {
+    handleClickSignin(){
+      this.$emit('loginSubmitted', {username: this.username, password: this.password})
     }
   }
 
@@ -61,15 +45,12 @@ export default {
     margin: 40px;
 }
 
-#loginTitle, .registerLink {
+#loginTitle {
   font-size: x-large;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.registerLink{
-  color: aquamarine;
-}
 
 #username, #password {
   display: flex;
