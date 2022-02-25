@@ -1,7 +1,7 @@
 <template>
   <div class="home">
   <h1>Register</h1>
-    <form v-on:click="onSubmit({
+    <form @submit.prevent="onSubmit({
       email: this.email,
       emailError: this.emailError,
       name: this.name,
@@ -77,8 +77,7 @@
       
       <button type="submit">Submit</button>
     </form>
-    {{registered}}
-    <p v-if="registered" data-testid="registered">Registered</p>
+    <h2 v-if="registered" data-testid="registered">Registered</h2>
   </div>
 </template>
 
@@ -155,10 +154,9 @@ export default {
     },
     methods: {
       onSubmit(data){
-        console.log("Submitted")
+        console.log(data.emailError + " " +  data.nameError)
         if (!(data.emailError || data.nameError || data.addressError || data.userNameError || data.passwordError || data.phoneError)){
           //Call to db goes here
-          console.log("No errors")
           this.registered=true
           //alert("Succesfully registered.")
         }
