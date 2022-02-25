@@ -39,7 +39,7 @@ export default createStore({
         }, 1000);
     },
     logInAs({commit}, user){
-      console.log(user)
+      //console.log(user)
       commit('SET_LOGGED_IN', true)
       commit('SET_USER', user)
     }
