@@ -1,14 +1,12 @@
 <template>
   <div class="home">
-    <BaseLogin @loginSubmitted="handleSignin" />
-  </div>
-  <div v-if="loggedInUnsuccesfully"  data-testid="register-link"> 
-    <router-link class="registerLink"  :to="{ name: 'Register' }">Register</router-link>
+    <BaseLogin @loginSubmitted="submitData" />
   </div>
 </template>
 
 <script>
 import BaseLogin from "../components/BaseLogin.vue";
+import APIService from "../services/APIService.js";
 
 export default {
   name: "LogIn",
@@ -29,7 +27,24 @@ export default {
         return true;
       }
       return false;
-    }
+    },
+    submitData(data) {
+      APIService.getToken(data.username, data.password)
+        .then((response) => {
+          console.log(response.data);
+
+          if (response.data == "Access denied, wrong credentials....") {
+            return alert("Wrong username/password");
+          }
+          this.$store.dispatch("logInAs", {
+            token: response.data[0],
+            user: response.data[1],
+          });
+          this.$router.push("/");
+        })
+        .catch((error) => console.log(error));
+      console.log("test");
+    },
   },
   data(){
     return {

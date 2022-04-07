@@ -3,17 +3,19 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     status: '',
-    name: '',
-    email: '',
-    message: '',
-    username: 'Elias',
     password: 'sdf',
     user: '',
-    loggedIn: 'false'
+    loggedIn: false,
+    jwtToken: "",
+    id: '',
   },
   mutations: {
     SET_STATUS(state, value){
       state.status = value
+    },
+    SET_TOKEN(state, value) {
+      state.loggedIn = true;
+      state.jwtToken = value;
     },
     SET_FEEDBACK(state, feedback){
       state.name = feedback.name
@@ -24,7 +26,8 @@ export default createStore({
       state.loggedIn = value
     },
     SET_USER(state, value){
-      state.user = value
+      state.user = value.username;
+      state.id = value.id;
     }
   },
   actions: {
@@ -38,11 +41,10 @@ export default createStore({
           }, 5000);
         }, 1000);
     },
-    logInAs({commit}, user){
-      //console.log(user)
-      commit('SET_LOGGED_IN', true)
-      commit('SET_USER', user)
-    }
+    logInAs({ commit }, value) {
+      commit("SET_TOKEN", value.token);
+      commit('SET_USER', value.user);
+    },
   },
   modules: {},
 });

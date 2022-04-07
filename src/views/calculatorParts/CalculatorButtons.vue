@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import APIService from "@/services/APIService.js";
 
 export default { //work on log
   name: "Calculator",
@@ -45,12 +45,15 @@ export default { //work on log
   methods: {
     sendGetRequest(button){
       console.log("REquest sent")
-      axios
-        .get('http://localhost:8080/Calc/' + button)
-        .then(response =>
+      APIService.buttonClicked(button)
+        .then(response =>{
           this.msg = response.data
-          )
-        .catch(error => console.log(error))
+          if(button == 'equals'){
+            this.$emit("equals-pressed");
+          }
+        }
+      )
+      .catch(error => console.log(error))
     }
   }
 };
